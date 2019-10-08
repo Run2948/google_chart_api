@@ -1,0 +1,137 @@
+/*
+Run2948 Copyright
+https://github.com/Run2948
+*/
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,th,td {margin:0;padding:0;}
+img,body,html {border:0;}
+address,caption,cite,code,dfn,em,strong,th,var {font-style:normal;font-weight:normal;}
+h1,h2,h3,h4,h5,h6 {font-size:100%;}
+
+body {
+font-size:14px;
+font-family: "宋体", "新宋体";
+}
+#wrap {
+max-width:760px;
+margin:0 auto;
+}
+h2,h3,h4 {
+background-color:#E5ECF9;
+border-top:1px solid #3366CC;
+font-weight:bold;
+margin:1.2em 0 0.5em 0;
+letter-spacing:0.15em;
+padding:3px 3px 3px 1em;
+position:relative;
+}
+h1 {
+font-size:32px;
+text-align:center;
+font-weight:bold;
+letter-spacing:0.2em;
+margin:0.7em 0 0 0;
+font-family: Arial;
+}
+h2 {font-size:18px;}
+h3 {font-size:18px;}
+h4 {
+font-size:16px;
+margin:0.4em 0 0.5em 0;}
+h5 {
+font-size:16px;
+font-weight:bold;
+margin:0.4em 0 0.4em 1.5em;
+}
+h6 {
+font-size:14px;
+font-weight:bold;
+margin:0.4em 0 0.4em 1.6em;
+}
+p {
+padding:4px 2.5em;
+line-height:1.4em;
+}
+p#foots {
+text-align:center;
+}
+p#foots a {
+margin:0 0.2em 0 0;
+}
+ul {
+margin:4px 3em 6px 4.5em;
+line-height:1.4em;
+}
+ul ul {
+margin:3px 2em 6px 2em;
+}
+#content ol {
+margin:3px 2em 5px 2em;
+}
+li {
+margin:0.15em 0;
+}
+code {
+color:#007000;
+font-size:1em;
+font-family:"Courier New",Courier,monospace;
+padding:0 0.5em;
+word-wrap:break-word;
+}
+a:link, a:visited, a:active {
+border-bottom:1px dashed;
+text-decoration:none;
+}
+a:hover {
+border-bottom:1px solid;
+text-decoration:none;
+background-color:#E5ECF9;
+color:#00F;
+}
+.nounder a {
+border-bottom:none;
+text-decoration:none;
+}
+p.note {
+border-color:#3366CC;
+}
+p.note, p.caution, p.warning {
+background-color:#EFEFEF;
+border-bottom:1px solid;
+border-top:1px solid;
+margin:0.8em 1em 0.4em;
+padding:0.2em 1em 0.2em 1.5em;
+}
+p.backToTop {
+font-size:12px;
+text-align:right;
+padding:0.4em 2em 0.1em;
+line-height:1em;
+}
+p.backToTop a:link, p.backToTop a:visited, p.backToTop a:active {
+color:#6666FF;
+}
+p.backToTop a:hover {
+color:#00F;
+}
+td {
+background-color:white;
+vertical-align:top;
+}
+th {
+background-color:#E5ECF9;
+font-weight:bold;
+}
+th, td {
+border:1px solid #3366CC;
+text-align:left;
+vertical-align:top;
+padding:6px 12px;
+text-align:left;
+}
+table {
+border-collapse:collapse;
+border-spacing:0pt;
+line-height:120%;
+margin:4px auto;
+width:95%;
+}

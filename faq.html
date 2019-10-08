@@ -1,0 +1,99 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Google Chart API 中文版 - 常见问题</title>
+  <meta name="author" content="Run2948 (1004850985@qq.com)" />
+  <meta name="keywords" content="Google Chart API, Google图表API, 谷歌图表API" />
+  <meta name="description" content="Google Chart API 常见问题。" />
+  <link rel="stylesheet" type="text/css" href="chartapi.css" />
+  <script type="text/javascript" src="jquery.pack.js"></script>
+  <script type="text/javascript" src="chartfaq.js"></script>
+</head>
+
+<body>
+  <div id="wrap">
+    <h1>Google Chart API 常见问题 中文版</h1>
+    <h2>文档信息</h2>
+    <p id="author">翻译: <a href="https://github.com/Run2948">Run2948</a> ，最后修改:<span id="lastModified"></span></p>
+    <p id="copyright"><a href="http://code.google.com/support/bin/topic.py?topic=13605">英文版</a>版权归 Google , 转载此<a
+        href="https://github.com/Run2948/google_chart_ap/blob/master/api.html">中文版</a>必须以链接形式注明<a
+        href="https://github.com/Run2948/google_chart_ap/blob/master/api.html">原文地址</a>、<a
+        href="https://github.com/Run2948">译者</a>信息及本声明。</p>
+    <p>API 参考：<a
+        href="https://github.com/Run2948/google_chart_ap/blob/master/api.html">https://github.com/Run2948/google_chart_ap/blob/master/api.html</a>
+    </p>
+    <p>常见问题：<a
+        href="https://github.com/Run2948/google_chart_ap/blob/master/faq.html">https://github.com/Run2948/google_chart_ap/blob/master/faq.html</a>
+    </p>
+    <h3>目录<a id="contents" name="contents"></a></h3>
+    <p id="content" class="nounder">载入中...</p>
+
+    <div class="section">
+      <h4>什么是 Google Chart API？<a id="whatis" name="whatis"></a></h4>
+      <div class="scrap">
+        <p>Google Chart API 是一款极其方便的图表生成工具，您可以在网页中直接嵌入图表图片。图表数据和参数通过 HTTP 请求传送，Google 依照此请求返回 PNG 格式的图表图片。Google Chart
+          API 支持多种图表类型，您可以使用 <code>img</code> 标签将图表直接嵌入网页。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h4>Google 为何免费提供此服务？<a id="sowhy" name="sowhy"></a></h4>
+      <div class="scrap">
+        <p>此工具起初为 Google 内部使用做开发，不过我们认为对广大网页开发者来说此工具也十分有用。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h4>Google 记录我的图表数据吗？<a id="islog" name="islog"></a></h4>
+      <div class="scrap">
+        <p>HTTP 请求中的图表数据储存时间不会超过两周，仅限于我们内部调试用。</p>
+        <p>您应该清楚，任何公开网页上的数据都可以被第三方访问到。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h4>使用建议或者功能请求发送到哪？<a id="sendwhere" name="sendwhere"></a></h4>
+      <div class="scrap">
+        <p>您可以发送到 <a href="http://groups.google.com/group/google-chart-api">Google Chart API 论坛</a>。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h4>目前支持哪些类型图表？<a id="supporttype" name="supporttype"></a></h4>
+      <div class="scrap">
+        <p>目前支持<a href="https://github.com/Run2948/google_chart_ap/blob/master/api.html#line_chart">折线图</a>、<a
+            href="https://github.com/Run2948/google_chart_ap/blob/master/api.html#bar_chart">柱状图</a>、<a
+            href="https://github.com/Run2948/google_chart_ap/blob/master/api.html#pie_chart">饼图</a>、<a
+            href="https://github.com/Run2948/google_chart_ap/blob/master/api.html#venn">维恩图</a>和<a
+            href="https://github.com/Run2948/google_chart_ap/blob/master/api.html#scatter_chart">散点图</a></p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h4>Google Chart API 有封装程序包吗？<a id="creatprogram" name="creatprogram"></a></h4>
+      <div class="scrap">
+        <p>目前我们只提供 HTTP 请求方式，当然您可以自己编写代码来构造请求 URL。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h4>标注中无法使用中文？<a id="cjkword" name="cjkword"></a></h4>
+      <div class="scrap">
+        <p>开发组正在努力解决国际化问题，包括绝大多数 Unicode 字符的显示问题。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h4>每天 50,000 次限制是指访客还是网页？<a id="limit50k" name="limit50k"></a></h4>
+      <div class="scrap">
+        <p>该限制指网页每天调用 Chart API 的限制，所以您应该尽量使用您的服务器缓存生成的图表。</p>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,1211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Google Chart API 中文版 - 开发者指南</title>
+	<meta name="author" content="Run2948 (1004850985@qq.com)" />
+	<meta name="keywords" content="Google Chart API, Google图表API, 谷歌图表API" />
+	<meta name="description" content="Google Chart API 参考中文版，提供强大的在线图表功能，生成的图表可直接以图片形式嵌入您的网页。调用方服务器无需支持动态语言。" />
+	<link rel="stylesheet" type="text/css" href="chartapi.css" />
+	<script type="text/javascript" src="jquery.pack.js"></script>
+	<script type="text/javascript" src="chartapi.pack.js"></script>
+</head>
+<body>
+<div id="wrap">
+	<h1>Google Chart API 参考 中文版</h1>
+	<h2>文档信息</h2>
+		<p id="author">翻译: <a href="https://github.com/Run2948">Run2948</a> ，最后修改:<span id="lastModified"></span></p>
+		<p id="copyright"><a href="http://code.google.com/apis/chart/">英文版</a>版权归 Google , 转载此<a href="https://github.com/Run2948/google_chart_api/blob/master/api.html">中文版</a>必须以链接形式注明<a href="https://github.com/Run2948/google_chart_api/blob/master/api.html">原文地址</a>、<a href="https://github.com/Run2948">译者</a>信息及本声明。</p>
+		<p>API 参考：<a href="https://github.com/Run2948/google_chart_api/blob/master/api.html">https://github.com/Run2948/google_chart_api/blob/master/api.html</a></p>
+		<p>常见问题：<a href="https://github.com/Run2948/google_chart_api/blob/master/faq.html">https://github.com/Run2948/google_chart_api/blob/master/faq.html</a></p>
+	<h3>简介</h3>
+		<p><a href="https://github.com/Run2948/google_chart_api/blob/master/api.html">Google Chart API</a> 为您提供动态创建图表的功能。单击下边的网址查看示例演示：</p>
+		<p><a href="http://chart.apis.google.com/chart?cht=p3&amp;chd=s:hW&amp;chs=250x100&amp;chl=Hello|World">http://chart.apis.google.com/chart?cht=p3&amp;chd=s:hW&amp;chs=250x100&amp;chl=Hello|World</a></p>
+		<p>您应该看到如下图表</p>
+		<p><img src="http://chart.apis.google.com/chart?cht=p3&amp;chd=s:hW&amp;chs=250x100&amp;chl=Hello|World" width="250" height="100" alt="示例演示" /></p>
+	<h3>目录<a id="contents" name="contents"></a></h3>
+		<p id="content">载入中...</p>
+
+<div class="section">
+	<h4>目的<a id="audience" name="audience"></a></h4>
+	<div class="scrap">
+		<p>本文档为使用 Google Chart API 的开发者提供 API 参考及参数说明。</p>
+	</div>
+</div>
+
+<div class="section">
+	<h4>使用方针<a id="usage" name="usage"></a></h4>
+	<div class="scrap">
+		<p>每位用户每天可发送 50,000 次请求。超过此限制后 Google 将暂时拒绝您的请求，若您继续发送请求，Google 可能会永久拒绝您的服务请求。</p>
+	</div>
+</div>
+
+<div class="section">
+	<h4>简介<a id="overview" name="overview"></a></h4>
+	<div class="scrap">
+		<p>Google Chart API 为每个请求返回一个 PNG 格式图片。目前提供如下类型图表：折线图、柱状图、饼图、维恩图、散点图。您可以设定图表尺寸、颜色和图例。</p>
+		<p>您可以在网页中使用<code>&lt;img&gt;</code>元素插入图表，当浏览器打开该网页时，Chart API 提供即时图表。</p>
+		<p>本文档内所有图表由 Chart API 生成，查看某图片方法：
+			<ul>
+				<li>如果您使用 Firefox ，在图片上单击右键，选择“查看图片”或“属性”。</li>
+				<li>如果您使用 Internet Explorer ，在图片上单击右键，选择“属性”。</li>
+			</ul>
+		</p>
+		<p>本文档将介绍 Chart API 所有参数设置。</p>
+	</div>
+</div>
+
+<div class="section">
+	<h4>URL格式<a id="url_format" name="url_format"></a></h4>
+	<div class="scrap">
+		<p>所有 Chart API URL 都应使用如下格式：</p>
+		<p><code>http://chart.apis.google.com/chart?&lt;parameter 1&gt;&amp;&lt;parameter 2&gt;&amp;&lt;parameter n&gt;</code></p>
+		<p class="note">注意：每个 URL 所有字符必须在同一行内。</p>
+		<p>多个参数间使用 &amp; 作为分隔符，您可以使用任意多个参数，如下图：</p>
+		<p><img src="http://chart.apis.google.com/chart?cht=lc&amp;chs=200x125&amp;chd=s:helloWorld&amp;chxt=x,y&amp;chxl=0:|Mar|Apr|May|June|July|1:||50+Kb" width="200" height="125" alt="示例演示" /></p>
+		<p><code>http://chart.apis.google.com/chart?cht=lc&amp;chs=200x125&amp;chd=s:helloWorld&amp;chxt=x,y&amp;chxl=0:|Mar|Apr|May|June|July|1:||50+Kb</code></p>
+		<p>参数解释：
+			<ul>
+				<li><code>http://chart.apis.google.com/chart?</code> Chart API 调用地址。</li>
+				<li><code>&amp;</code>参数分隔符。</li>
+				<li><code>chs=200x125</code>图表尺寸。</li>
+				<li><code>chd=s:helloWorld</code>图表数据值。</li>
+				<li><code>cht=lc</code>图表类型。</li>
+				<li><code>chxt=x,y</code>显示 x、y 轴坐标。</li>
+				<li><code>chxl=0:|Mar|Apr|May|June|July|1:||50+Kb</code>x、y 轴坐标值。</li>
+			</ul>
+		</p>
+		<p>你可以在网页中使用<code>img</code>元素插入图表，如：</p>
+		<p><code>&lt;img src=&quot;http://chart.apis.google.com/chart?chs=200x125&amp;amp;chd=s:helloWorld&amp;amp;cht=lc&amp;amp;chxt=x,y&amp;amp;chxl=0:|Mar|Apr|May|June|July|1:||50+Kb&quot; alt=&quot;Sample chart&quot; /&gt;</code></p>
+		<p class="note">注意：在HTML<code>img</code>元素中，URL 属性中<code>&amp;</code>字符应书写为转义字符<code>&amp;amp;</code>。</p>
+	</div>
+</div>
+
+<div class="section">
+	<h4>必须、可选参数<a id="required_params" name="required_params"></a></h4>
+	<div class="scrap">
+		<p>所有请求必须包含以下参数：
+			<ul>
+				<li><a href="#chart_size" scrollto="chart_size">图表尺寸</a></li>
+				<li><a href="#chart_data" scrollto="chart_data">图表数据</a></li>
+				<li><a href="#chart_type" scrollto="chart_type">图表类型</a></li>
+			</ul>
+		</p>
+		<p>其它参数均为可选参数，各类型图表有效参数如下：<a id="optional_param_by_chart_type" name="optional_param_by_chart_type"></a></p>
+
+<table><thead>
+	<tr>
+		<th width="20%">参数</th>
+		<th width="13%">折线图</th>
+		<th width="13%">散点图</th>
+		<th width="13%">柱状图</th>
+		<th width="13%">维恩图</th>
+		<th width="13%">饼图</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td><a href="#chtt" scrollto="chtt">图表标题</a></td>
+		<td>可用</td><td>可用</td><td>可用</td><td>可用</td><td>可用</td></tr>
+	<tr>
+		<td><a href="#chdl" scrollto="chdl">图表图例</a></td>
+		<td>可用</td><td>可用</td><td>可用</td><td>可用</td><td>可用</td></tr>
+	<tr>
+		<td><a href="#line_bar_pie_colors" scrollto="line_bar_pie_colors">颜色</a></td>
+		<td>可用</td><td>可用</td><td>可用</td><td>可用</td><td>可用</td></tr>
+	<tr>
+		<td><a href="#chart_or_background_fill" scrollto="chart_or_background_fill">背景填充</a></td>
+		<td>可用</td><td>可用</td><td>可用</td><td>可用</td><td>可用</td></tr>
+	<tr>
+		<td><a href="#multiple_axes_labels" scrollto="multiple_axes_labels">多轴标注</a></td>
+		<td>可用</td><td>可用</td><td>可用</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr>
+		<td><a href="#grid" scrollto="grid">网格线</a></td>
+		<td>可用</td><td>可用</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr>
+		<td><a href="#shape_markers2" scrollto="shape_markers2">形状标记</a></td>
+		<td>可用</td><td>可用</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr>
+		<td><a href="#hor_line_marker" scrollto="hor_line_marker">水平区间填充</a></td>
+		<td>可用</td><td>可用</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr>
+		<td><a href="#vert_line_marker" scrollto="vert_line_marker">垂直区间填充</a></td>
+		<td>可用</td><td>可用</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr> 
+	<tr>
+		<td><a href="#line_styles" scrollto="line_styles">折线样式</a></td>
+		<td>可用</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr>
+		<td><a href="#fill_area_marker" scrollto="fill_area_marker">数据区块填充</a></td>
+		<td>可用</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr>
+		<td><a href="#pie_labels" scrollto="pie_labels">饼图标注</a></td>
+		<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>可用</td></tr>
+</tbody></table>
+
+	</div>
+</div>
+
+<div class="section">
+	<h4>图表尺寸<a id="chart_size" name="chart_size"></a></h4>
+	<div class="scrap">
+		<p>参数格式：<code>chs=&lt;像素宽度&gt;x&lt;像素高度&gt;</code></p>
+		<p>例如：<code>chs=300x200</code>，表示一个 300 像素宽、200 像素高的图表。</p>
+		<p>单个图表最大尺寸为 300,000 平方像素，宽高最大为 1000 像素，以下尺寸均为最大可用尺寸：1000x300，300x1000，600x500，500x600，800x375 和 375x800 等。</p>
+	</div>
+</div>
+
+<div class="section">
+	<h4>图表数据<a id="chart_data" name="chart_data"></a></h4>
+	<div class="scrap">
+		<p>图表数据有三种格式：
+			<ul>
+				<li><a href="#simple" scrollto="simple">简单编码</a> 包含 62 个数值，每个数值占据 5 个像素，适用于 300 像素大小的折线图和柱状图，所有图表类型都可以使用简单编码数据。</li>
+				<li><a href="#text" scrollto="text">文本编码</a> 包含 1000 个数值，使用 0.0 至 100.0 的浮点数，每十个数值占据 5 个像素，在仅使用整数的情况下，适用于 500 像素以内的图表。如需要更高精度，可使用一位小数数字（如 92.6）</li>
+				<li><a href="#extend" scrollto="extend">扩展编码</a> 包含 4096 个数值，适用于高精度或大型图表。</li>
+			</ul>
+		</p>
+		<p class="note">注意：文本编码和扩展编码使用多个字符表示一个数值。简单编码生成图表的效率最高。</p>
+		<h5>简单编码<a id="simple" name="simple"></a></h5>
+			<p>简单编码格式为</p>
+			<p><code>chd=s:&lt;数值字符串&gt;</code></p>
+			<p>其中<code>&lt;数值字符串&gt;</code>可包含<code>a-z</code>、<code>A-Z</code>、<code>0-9</code>、<code>_</code>和<code>,</code>。</p>
+			<p>含义如下
+				<ul>
+					<li>大写字母<code>A</code>= 0、<code>B</code>= 1，以此类推，<code>Z</code>= 25。</li>
+					<li>小写字母<code>a</code>= 26、<code>b</code>= 27，以此类推，<code>z</code>= 51。</li>
+					<li>数字<code>0</code>= 52，以此类推，<code>9</code>= 61.</li>
+					<li>下划线<code>_</code>表示空值。</li>
+					<li>逗号<code>,</code>为数据分组符号。</li>
+				</ul>
+			</p>
+			<p class="note">注意：简单编码中，图表底端为 0 ，图表顶端为 61 ，中间数值在垂直方向平均分布。</p>
+		<h5>文本编码<a id="text" name="text"></a></h5>
+			<p>文本编码格式为</p>
+			<p><code>chd=t:&lt;数值字符串&gt;</code></p>
+			<p>其中<code>&lt;数值字符串&gt;</code>为<code>0.0</code>至<code>100.0</code>的浮点数、<code>-1</code>（负一）和<code>|</code>（竖线）。</p>
+			<p>含义如下
+				<ul>
+					<li>浮点数字<code>0.0</code>= 0，以此类推<code>100.0</code>= 100。</li>
+					<li>负一<code>-1</code>表示空值。</li>
+					<li>竖线<code>|</code>为数据分组符号。</li>
+				</ul>
+			</p>
+			<p class="note">注意：文本编码中，图表底端为 0.0 ，图表顶端为 100.0 ，中间数值在垂直方向平均分布。</p>
+		<h5>扩展编码<a id="extend" name="extend"></a></h5>
+			<p>文本编码格式为</p>
+			<p><code>chd=e:&lt;数值字符串&gt;</code></p>
+			<p>其中<code>&lt;数值字符串&gt;</code>为<code>A-Z</code>、<code>a-z</code>、<code>0-9</code>、连字符<code>-</code>、小数点<code>.</code>、下划线<code>_</code>和逗号<code>,</code>。</p>
+			<p>含义如下
+				<ul>
+					<li><code>AA</code>= 0、<code>AZ</code>= 25、<code>Aa</code>= 26、<code>Az</code>= 51、<code>A0</code>= 52、<code>A9</code>= 61、<code>A-</code>= 62、<code>A.</code>= 63、<code>BA</code>= 64、<code>BZ</code>= 89、<code>.A</code>= 4032、<code>.Z</code>= 4057、<code>.a</code>= 4058、<code>.z</code>= 4083、<code>.0</code>= 4084、<code>.9</code>= 4093、<code>.-</code>= 4094、<code>..</code>= 4095。</li>
+					<li>两个下划线<code>__</code>表示空值。</li>
+					<li>逗号<code>,</code>为数据分组符号。</li>
+				</ul>
+			</p>
+			<p class="note">注意：文本编码中，图表底端为 0 ，图表顶端为 4095 ，中间数值在垂直方向平均分布。</p>
+		<h5>JavaScript 数值转换代码</h5>
+			<p>如您所知，使用程序来自动将数值转换为 Chart API 数值比手动转换快捷得多。</p>
+			<p>下边这段 JavaScript 代码用于将数据转换为简单编码格式。第一个参数需为数据数组，负数将被转换为空值<code>_</code>。</p>
+			<p>第二个参数为数据中最大值。在折线图和柱状图中，如果您希望图表顶端与最大值间有一定空间，可以使此参数值大于数据中最大值。</p>
+			<p>
+<code>var simpleEncoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';<br/>
+<br/>
+function simpleEncode(values,maxValue) {<br/>
+<br/>
+&nbsp;&nbsp;var chartData = ['s:'];<br/>
+&nbsp;&nbsp;for (var i = 0; i &lt; values.length; i++) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;var currentValue = values[i];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;if (!isNaN(currentValue) &amp;&amp; currentValue &gt;= 0) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chartData.push(simpleEncoding.charAt(Math.round((simpleEncoding.length-1) * currentValue / maxValue)));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;else {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chartData.push('_');<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;return chartData.join('');<br/>
+}
+</code>
+</p>
+		<h5>图表粒度指导</h5>
+			<p>不要为图表设定过多数据点。例如，显示布兰妮·斯皮尔斯过去十年的流行程度，如果每天搜索量作为一个数据点的话，将有 3,600 个数据点，对于 URL 来说数据太多了，Chart API 也不会生成粒度如此密的图表—— 1024 像素宽的显示器上每个数据点之占据四分之一个像素。下边的示例解释这个问题。</p>
+			<p>200x100 像素图，20 个数据点（每个数据点占 10 个像素）</p>
+			<p><img src="http://chart.apis.google.com/chart?cht=lc&amp;chs=200x100&amp;chd=s:fohmnytenefohmnytene&amp;chxt=x,y&amp;chxl=0:|Apr|May|June|1:||50+Kb" width="200" height="100" alt="示例图表" /></p>
+			<p>40 个数据点（每个数据点占 5 个像素）</p>
+			<p><img src="http://chart.apis.google.com/chart?cht=lc&amp;chs=200x100&amp;chd=s:frothsmzndyoteepngenfrothsmzndyoteepngen&amp;chxt=x,y&amp;chxl=0:|Apr|May|June|1:||50+Kb" width="200" height="100" alt="示例图表" /></p>
+			<p>80 个数据点（每个数据点仅占 2.5 个像素）</p>
+			<p><img src="http://chart.apis.google.com/chart?cht=lc&amp;chs=200x100&amp;chd=s:formostthisamazingdayfortheleapinggreenlformostthisamazingdayfortheleapinggreenl&amp;chxt=x,y&amp;chxl=0:|Apr|May|June|1:||50+Kb" width="200" height="100" alt="示例图表" /></p>
+
+	</div>
+</div>
+
+<div class="section">
+	<h4>图表类型<a id="chart_type" name="chart_type"></a></h4>
+	<div class="scrap">
+		<p>目前有五种图表类型：
+			<ul>
+				<li><a href="#line_chart" scrollto="line_chart">折线图</a></li>
+				<li><a href="#bar_chart" scrollto="bar_chart">柱状图</a></li>
+				<li><a href="#pie_chart" scrollto="pie_chart">饼图</a></li>
+				<li><a href="#venn" scrollto="venn">维恩图</a></li>
+				<li><a href="#scatter_chart" scrollto="scatter_chart">散点图</a></li>
+			</ul>
+		</p>
+		<h5>折线图<a id="line_chart" name="line_chart"></a></h5>
+			<p>折线图参数为</p>
+			<p><code>cht=&lt;折线图类型&gt;</code></p>
+			<p><code>&lt;折线图类型&gt;</code>可选择<code>lc</code>或<code>lxy</code>。
+				<ul>
+					<li><code>lc</code>类型图表，多组数据将绘制为多条数据线。</li>
+					<li><code>lxy</code>类型图表每条数据线需要两组数据。</li>
+					<li>设置多组数据的方法请参看<a href="#chart_data" scrollto="chart_data">数据格式</a></li>
+					<li>更多可用参数请参看<a href="#optional_param_by_chart_type" scrollto="optional_param_by_chart_type">可选参数</a>。</li>
+				</ul>
+			</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td><code>cht=lc</code></td>
+		<td>直线图，x 轴方向均匀分布。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chs=200x125&amp;chd=s:fooZaroo" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>cht=lc</code></td>
+	</tr>
+	<tr>
+		<td><code>cht=lxy</code></td>
+		<td>每条数据线使用两组数据，第一组指定 x 轴坐标，第二组指定 y 轴坐标。<br/><br/>
+		第一组数据为空时数据线将在 x 轴均匀分布。因为示例使用文本编码，所以空值为<code>-1</code>。简单编码使用下划线<code>_</code>，扩展编码使用双下划线<code>__</code>表示空值。<br/><br/>
+		数据点形状使用参数<code>chm</code>，请参考<a href="#shape_markers" scrollto="shape_markers">形状标记</a>一节。<br/><br/>
+		数据线颜色参考<a href="#chart_colors" scrollto="chart_colors">颜色</a>一节。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lxy&amp;chs=200x125&amp;chd=t:0,30,60,70,90,95,100|20,30,40,50,60,70,80|10,30,40,45,52|100,90,40,20,10|-1|5,33,50,55,7&amp;chco=3072F3,ff0000,00aaaa&amp;chls=2,4,1&amp;chm=s,FF0000,0,-1,5|s,0000ff,1,-1,5|s,00aa00,2,-1,5" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>cht=lxy</code><br/>
+		<code>chd=t:0,30,60,70,90,95,100|</code><br/>
+		<code>20,30,40,50,60,70,80|</code><br/>
+		<code>10,30,40,45,52|</code><br/>
+		<code>100,90,40,20,10|</code><br/>
+		<code>-1|</code><br/>
+		<code>5,33,50,55,7</code></td>
+	</tr>
+</tbody></table>
+		<h5>柱状图<a id="bar_chart" name="bar_chart"></a></h5>
+			<p>柱状图参数为</p>
+			<p><code>cht=&lt;柱状图类型&gt;</code></p>
+			<p><code>&lt;柱状图类型&gt;</code>可选择<code>bhs</code>、<code>bhg</code>、<code>bvs</code>和<code>bvg</code>。
+				<ul>
+					<li>多组数据将绘制为层叠柱状图。</li>
+					<li>设置多组数据的方法请参看<a href="#chart_data" scrollto="chart_data">数据格式</a></li>
+					<li>更多可用参数请参看<a href="#optional_param_by_chart_type" scrollto="optional_param_by_chart_type">可选参数</a>。</li>
+				</ul>
+			</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td><code>cht=bhs</code><br/><br/>
+		<code>cht=bvs</code></td>
+		<td>水平（Horizontal）或垂直（Vertical）柱状图。<br/><br/>
+		多组数据将绘制为层叠柱状图，所以必须设置颜色参数，具体参看<a href="#chart_colors" scrollto="chart_colors">颜色</a>一节。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=bhs&amp;chs=200x125&amp;chd=s:HELL,WORL&amp;chco=ff0000,00aa00" width="200" height="125" alt="示例图表" /><br/>
+		<code>cht=bhs</code><br/>
+		<code>chco=ff0000,00aa00</code><br/>
+		<img src="http://chart.apis.google.com/chart?cht=bvs&amp;chs=200x125&amp;chd=s:hello,world&amp;chco=cc0000,00aa00&amp;chbh=20" width="200" height="125" alt="示例图表" /><br/>
+		<code>cht=bvs</code><br/>
+		<code>chco=cc0000,00aa00</code></td>
+	</tr>
+	<tr>
+		<td><code>cht=bhg</code><br/><br/>
+		<code>cht=bvg</code></td>
+		<td>水平（Horizontal）或垂直（Vertical）独立柱状图，可设定颜色，多组数据将分别绘制。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=bhg&amp;chs=200x125&amp;chd=s:el,or&amp;chco=cc0000,00aa00" width="200" height="125" alt="示例图表" /><br/>
+		<code>cht=bhg</code><br/>
+		<code>chco=cc0000,00aa00</code><br/>
+		<img src="http://chart.apis.google.com/chart?cht=bvg&amp;chs=200x125&amp;chd=s:hello,world&amp;chco=cc0000,00aa00" width="200" height="125" alt="示例图表" /><br/>
+		<code>cht=bvg</code><br/>
+		<code>chco=cc0000,00aa00</code></td>
+	</tr>
+	<tr>
+		<td><code>chbh</code></td>
+		<td>柱状图尺寸处理方法与其它类型图表不同。<br/><br/>
+		对于垂直柱状图<code>cht=bvs</code>和<code>cht=bvg</code>、水平柱状图<code>cht=bhs</code>和<code>cht=bhg</code>，图表尺寸由<code>chs</code>参数决定，当该参数过小时，柱状图显示将不完整。<br/><br/>
+		所以您可以指定更细的柱状图图表。<br/>
+		<code>chbh=</code><br/>
+		<code>&lt;柱宽度&gt;,</code><br/>
+		<code>&lt;可选的柱组间空白&gt;</code>
+		<p class="note">注意：第二个参数决定各组数据树状图间空白，组内数据间空白为该值一半。</p></td>
+		<td><img src="http://chart.apis.google.com/chart?cht=bhs&amp;chs=200x125&amp;chd=s:hello" width="200" height="125" alt="示例图表" /><br/>
+		<code>chbh</code>未设置<br/>
+		<code>cht=bhs</code><br/>
+		<img src="http://chart.apis.google.com/chart?cht=bhs&amp;chs=200x125&amp;chd=s:hello&amp;chbh=10" width="200" height="125" alt="示例图表" /><br/>
+		<code>chbh=10</code><br/>
+		<code>cht=bhs</code></td>
+	</tr>
+</tbody></table>
+		<h5>饼图<a id="pie_chart" name="pie_chart"></a></h5>
+			<p>饼图参数为</p>
+			<p><code>cht=&lt;饼图类型&gt;</code></p>
+			<p><code>&lt;饼图类型&gt;</code>可选择<code>p</code>或<code>p3</code>。
+				<ul>
+					<li>仅支持一组数据，后续数据将被忽略。</li>
+					<li>更多可用参数请参看<a href="#optional_param_by_chart_type" scrollto="optional_param_by_chart_type">可选参数</a>。</li>
+				</ul>
+			</p>
+			<p>Google Chart API 根据<code>chs</code>参数决定饼图半径。请将宽高比设置为较大比例以使标注能完整显示。当标注不完整时说明宽高比偏小。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td><code>cht=p</code></td>
+		<td>平面饼图。<br/><br/>
+		使用<code>chl</code>参数设定标注，请参见<a href="#pie_labels" scrollto="pie_labels">饼图标注</a>一节。<br/><br/>
+		为设定颜色时，饼图颜色将在橘黄色和浅黄色间插值计算出。设置颜色参数请参看<a href="#chart_colors" scrollto="chart_colors">颜色</a>一节。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=p&amp;chd=s:world5&amp;chs=200x125&amp;chl=A|B|C|D|E|F" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>cht=p</code></td>
+	</tr>
+	<tr>
+		<td><code>cht=p3</code></td>
+		<td>三维饼图。<br/><br/>
+		使用<code>chl</code>参数设定标注，请参见<a href="#pie_labels" scrollto="pie_labels">饼图标注</a>一节。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=p3&amp;chd=s:Uf9a&amp;chs=200x100&amp;chl=A|B|C|D" width="200" height="100" alt="示例图表" /><br/><br/>
+		<code>cht=p3</code></td>
+	</tr>
+</tbody></table>
+		<h5>维恩图<a id="venn" name="venn"></a></h5>
+			<p>维恩图参数为<code>cht=v</code></p>
+			<p>一组数据包含以下七个数值：
+				<ul>
+					<li>前三个数值表示 A、B、C 的相对大小关系。</li>
+					<li>第四个数值表示 A 和 B 重叠数值。</li>
+					<li>第五个数值表示 B 和 C 重叠数值。</li>
+					<li>第六个数值表示 A 和 C 重叠数值。</li>
+					<li>第七个数值表示 A、B、C 重叠数值。</li>
+				</ul>
+			</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td><code>cht=v</code></td>
+		<td>示例中三个圆圈数值分别为 100、80、60，两两间重叠数值为 30。<br/><br/>
+		更多可用参数请参看<a href="#optional_param_by_chart_type" scrollto="optional_param_by_chart_type">可选参数</a>。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=v&amp;chs=200x100&amp;chd=t:100,80,60,30,30,30,10" width="200" height="100" alt="示例图表" /><br/><br/>
+		<code>cht=v</code><br/>
+		<code>chd=t:100,80,60,30,30,30,10</code></td>
+	</tr>
+</tbody></table>
+		<h5>散点图<a id="scatter_chart" name="scatter_chart"></a></h5>
+			<p>散点图参数为<code>cht=s</code></p>
+			<p>
+				<ul>
+					<li>设置多组数据的方法请参看<a href="#chart_data" scrollto="chart_data">数据格式</a></li>
+					<li>更多可用参数请参看<a href="#optional_param_by_chart_type" scrollto="optional_param_by_chart_type">可选参数</a>。</li>
+				</ul>
+			</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td><code>cht=s</code></td>
+		<td>需要至少两组数据，第一组指定 x 轴坐标，第二组指定 y 轴坐标。<br/><br/>
+		默认数据点形状为圆圈，设定其它形状请使用<code>chm</code>参数，详见<a href="#shape_markers" scrollto="shape_markers">形状标记</a>。<br/><br/>
+		默认数据点颜色为蓝色，设置颜色请参看<a href="#chart_colors" scrollto="chart_colors">颜色</a>一节。<br/><br/>
+		您可能注意到了，在演示图表中，数据点拥有不同大小。如需此特性，可设置第三组数据。<code>chm</code>参数中指定的形状尺寸将匹配第三组数据中最大值。例如<code>chm</code>中设置形状尺寸为 20 像素，第三组数据中最大值（如 9，26.0 等）将显示为 20 像素大小。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=s&amp;chd=s:984sttvuvkQIBLKNCAIi,DEJPgq0uov17zwopQODS,AFLPTXaflptx159gsDrn&amp;chxt=x,y&amp;chxl=0:|0|2|3|4|5|6|7|8|9|10|1:|0|25|50|75|100&amp;chs=200x125" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>cht=s</code></td>
+	</tr>
+</tbody></table>
+	</div>
+</div>
+
+<div class="section">
+	<h4>颜色<a id="chart_colors" name="chart_colors"></a></h4>
+	<div class="scrap">
+		<p>使用 6 或 8 位的十六进制颜色参数，格式<code>RRGGBB</code>，示例：<a id="rgb" name="rgb"></a>
+			<ul>
+				<li><code>FF0000</code>= 红色</li>
+				<li><code>00FF00</code>= 绿色</li>
+				<li><code>0000FF</code>= 蓝色</li>
+				<li><code>000000</code>= 黑色</li>
+				<li><code>FFFFFF</code>= 白色</li>
+			</ul>
+		</p>
+		<p>您可以附加两位来设定透明度，代码<code>00</code>与<code>FF</code>之间，<code>00</code>表示完全透明，<code>FF</code>表示完全不透明。
+			<ul>
+				<li><code>0000FFFF</code>= 不透明蓝色</li>
+				<li><code>0000FF00</code>= 透明蓝色</li>
+			</ul>
+		</p>
+		<p>有效的颜色设定：
+			<ul>
+				<li><a href="#line_bar_pie_colors" scrollto="line_bar_pie_colors">折线图、柱状图、维恩图和饼图数据颜色</a>。</li>
+				<li><a href="#chart_or_background_fill" scrollto="chart_or_background_fill">图表区域填充、背景颜色</a>。</li>
+			</ul>
+		</p>
+
+		<h5>数据颜色<a id="line_bar_pie_colors" name="line_bar_pie_colors"></a></h5>
+			<p>设定折线图、柱状图、维恩图和饼图数据颜色。</p>
+			<p><code>chco=</code><br/>
+			<code>&lt;颜色参数1&gt;,</code><br/>
+			<code>...</code><br/>
+			<code>&lt;颜色参数n&gt;</code></p>
+			<p>其中<code>&lt;颜色参数1&gt;</code>及后续延续参数均使用十六进制参数。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td rowspan="6"><code>chco</code></td>
+		<td>示例中有三组指定颜色的数据。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chco=ff0000,00ff00,0000ff&amp;chs=200x125&amp;chd=s:FOETHECat,lkjtf3asv,KATYPSNXJ&amp;chxt=x,y&amp;chxl=0:|Oct|Nov|Dec|1:||20K||60K||100K" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chco=ff0000,00ff00,0000ff</code></td>
+	</tr>
+	<tr>
+		<td>同样有三组数据，但只设定了两组颜色，所以最后一组数据使用最后一个颜色设定（红色<code>FF0000</code>）。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chco=ff0000,0000ff&amp;chs=200x125&amp;chd=s:FOETHECat,lkjtf3asv,KATYPSNXJ&amp;chxt=x,y&amp;chxl=0:|Oct|Nov|Dec|1:||20K||60K||100K" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chco=ff0000,0000ff</code></td>
+	</tr>
+	<tr>
+		<td>在柱状图中，如果数据组数比颜色组数多，则数据颜色交替使用颜色设定。示例中，第三组数据使用第一个数据颜色，如果只设定了一种颜色，则所有数据都为该颜色。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=bhs&amp;chco=ff0000,00ff00&amp;chs=200x125&amp;chd=s:FOE,THE,Bar&amp;chxt=x,y&amp;chxl=1:|Dec|Nov|Oct|0:||20K||60K||100K|" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chco=ff0000,00ff00</code><br/>
+		<code>chd=s:FOE,THE,Bar</code></td>
+	</tr>
+	<tr>
+		<td>同一组数据，设定了三组颜色。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=bhs&amp;chco=ff0000,00ff00,0000ff,&amp;chs=200x125&amp;chd=s:FOE,THE,Bar&amp;chxt=x,y&amp;chxl=1:|Dec|Nov|Oct|0:||20K||60K||100K|" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chco=ff0000,00ff00,0000ff</code><br/>
+		<code>chd=s:FOE,THE,Bar</code></td>
+	</tr>
+	<tr>
+		<td>在饼图中，如果数据组数比颜色组数多，则数据颜色使用颜色间内插值计算补足。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=p3&amp;chs=200x90&amp;chd=s:Hellobla&amp;chl=May|Jun|Jul|Aug|Sep|Oct&amp;chco=0000ff" width="200" height="90" alt="示例图表" /><br/><br/>
+		<code>chco=0000ff</code></td>
+	</tr>
+	<tr>
+		<td>在维恩图中，如果数据组数比颜色组数多，多余数据组使用最后一个颜色。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=v&amp;chs=200x100&amp;chd=t:100,80,60,30,30,30,10&amp;chco=00ff00,0000ff" width="200" height="100" alt="示例图表" /><br/><br/>
+		<code>chco=00ff00,0000ff</code></td>
+	</tr>
+</tbody></table>
+
+		<h5>区域填充、背景颜色<a id="chart_or_background_fill" name="chart_or_background_fill"></a></h5>
+			<p>设定背景填充：</p>
+			<p><code>chf=</code><br/>
+			<code>&lt;bg 或 c&gt;&lt;填充类型&gt;</code></p>
+			<p>其中
+				<ul>
+					<li><code>&lt;bg 或 c&gt;</code>中<code>bg</code>表示背景，<code>c</code>表示图表区域。</li>
+					<li><code>&lt;填充类型&gt;</code>可选
+						<ul>
+							<li><a href="#solid_fill" scrollto="solid_fill">实心填充</a></li>
+							<li><a href="#linear_gradient" scrollto="linear_gradient">线性渐变</a></li>
+							<li><a href="#linear_stripes" scrollto="linear_stripes">线性条纹</a></li>
+						</ul>
+					</li>
+					<li>竖线<code>|</code>为填充数据组分隔符，最后一组数据后无需分隔符。</li>
+				</ul>
+			</p>
+		<h5>实心填充<a id="solid_fill" name="solid_fill"></a></h5>
+			<p>设定参数格式：</p>
+			<p><code>chf=</code><br/>
+			<code>&lt;bg 或 c&gt;,s,&lt;颜色&gt;|</code><br/>
+			<code>&lt;bg 或 c&gt;,s,&lt;颜色&gt;</code></p>
+			<p>其中
+				<ul>
+					<li><code>&lt;bg 或 c&gt;</code>中<code>bg</code>表示背景，<code>c</code>表示图表区域。</li>
+					<li><code>s</code>代表实心填充。</li>
+					<li><code>&lt;颜色&gt;</code>为十六进制颜色<code>RRGGBB</code>参数。</li>
+					<li>竖线<code>|</code>为填充数据组分隔符，最后一组数据后无需分隔符。</li>
+				</ul>
+			</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td rowspan="3"><code>chf</code></td>
+		<td>示例中使用灰色（<code>EFEFEF</code>）填充背景。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:pqokeYONOMEBAKPOQVTXZdecaZcglprqxuux393ztpoonkeggjp&amp;chco=FF0000&amp;chls=4.0,3.0,0.0&amp;chs=200x125&amp;chxt=x,y&amp;chxl=0:|Jun|July|Aug|1:||20|30|40|50&amp;chf=bg,s,efefef" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chf=bg,s,efefef</code></td>
+	</tr>
+	<tr>
+		<td>示例中使用灰色（<code>EFEFEF</code>）填充背景，黑色（<code>000000</code>）填充图表区域。您可以为折线图和散点图同时设置背景和图表区域填充。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=s&amp;chd=s:pqokeYONOMEPOQVTXZdeca,Zcglprqxuuxztpoonkeggjp&amp;chco=FF0000&amp;chls=4.0,3.0,0.0&amp;chs=200x125&amp;chxt=x,y&amp;chxl=0:|Jun|July|Aug|1:||20|30|40|50&amp;chf=bg,s,efefef|c,s,000000" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chf=bg,s,efefef|</code><br/>
+		<code>c,s,000000</code></td>
+	</tr>
+	<tr>
+		<td>饼图、维恩图、柱状图只能设置背景颜色。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=bhs&amp;chs=200x125&amp;chd=s:Hell8&amp;chbh=15&amp;chf=bg,s,FFF2CC&amp;chxt=x,y&amp;chxl=0:||20|30|40|50|1:|Oct|Sep|Aug|July|Jun" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chf=bg,s,FFF2CC</code></td>
+	</tr>
+</tbody></table>
+
+		<h5>线性渐变<a id="linear_gradient" name="linear_gradient"></a></h5>
+			<p>设定参数格式：</p>
+			<p><code>chf=&lt;bg or c&gt;,lg,&lt;angle&gt;,&lt;color 1&gt;,&lt;offset 1&gt;,&lt;color n&gt;,&lt;offset n&gt;</code></p>
+			<p>其中
+				<ul>
+					<li><code>&lt;bg 或 c&gt;</code>中<code>bg</code>表示背景，<code>c</code>表示图表区域。</li>
+					<li><code>lg</code>代表线性渐变。</li>
+					<li><code>&lt;angle&gt;</code>设定填充旋转角度，值在<code>0</code>垂直与<code>90</code>水平之间。</li>
+					<li><code>&lt;颜色&gt;</code>为十六进制颜色<code>RRGGBB</code>参数。</li>
+					<li><code>&lt;offset&gt;</code>表示偏移量，必须在<code>0</code>和<code>1</code>之间，<code>0</code>表示最靠左端，<code>1</code>表示最靠右端。</li>
+				</ul>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td rowspan="3"><code>chf</code></td>
+		<td>图表区域填充水平线性渐变（左至右），<code>0</code>度旋转。<br/><br/>
+		蓝色（<code>76A4FB</code>）为第一个颜色参数，设置在最右侧。<br/><br/>
+		白色（<code>FFFFFF</code>）为第二个颜色参数，设置在最左侧。<br/><br/>
+		图表背景设置为灰色（<code>EFEFEF</code>）。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:pqokeYONOMEBAKPOQVTXZdecaZcglprqxuux393ztpoonkeggjp&amp;chco=FF0000&amp;chls=4.0,3.0,0.0&amp;chs=200x125&amp;chxt=x,y&amp;chxl=0:|1|2|3|4|5|1:|0|50|100&amp;chf=c,lg,0,76A4FB,1,ffffff,0|bg,s,EFEFEF" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chf=</code><br/>
+		<code>c,lg,0,76A4FB,1,ffffff,0|</code><br/>
+		<code>bg,s,EFEFEF</code></td>
+	</tr>
+	<tr>
+		<td>图表区域填充倾斜线性渐变（左下至右上），<code>45</code>度旋转。<br/><br/>
+		白色（<code>FFFFFF</code>）为第一个颜色参数，设置在左下。<br/><br/>
+		蓝色（<code>76A4FB</code>）为第二个颜色参数，设置在右上。<br/><br/>
+		图表背景设置为灰色（<code>EFEFEF</code>）。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:pqokeYONOMEBAKPOQVTXZdecaZcglprqxuux393ztpoonkeggjp&amp;chco=FF0000&amp;chls=4.0,3.0,0.0&amp;chxt=x,y&amp;chxl=0:|1|2|3|4|5|1:|0|50|100&amp;chs=200x125&amp;chf=c,lg,45,ffffff,0,76A4FB,0.75|bg,s,EFEFEF" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chf=</code><br/>
+		<code>c,lg,45,ffffff,0,76A4FB,0.75|</code><br/>
+		<code>bg,s,EFEFEF</code></td>
+	</tr>
+	<tr>
+		<td>图表区域填充垂直线性渐变（上至下），<code>90</code>度旋转。<br/><br/>
+		蓝色（<code>76A4FB</code>）为第一个颜色参数，设置在最上侧。<br/><br/>
+		白色（<code>FFFFFF</code>）为第二个颜色参数，设置在最下侧。<br/><br/>
+		图表背景设置为灰色（<code>EFEFEF</code>）。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:pqokeYONOMEBAKPOQVTXZdecaZcglprqxuux393ztpoonkeggjp&amp;chco=FF0000&amp;chls=4.0,3.0,0.0&amp;chs=200x125&amp;chxt=x,y&amp;chxl=0:|1|2|3|4|5|1:|0|50|100&amp;chf=c,lg,90,76A4FB,0.5,ffffff,0|bg,s,EFEFEF" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chf=</code><br/>
+		<code>c,lg,90,76A4FB,0.5,ffffff,0|</code><br/>
+		<code>bg,s,EFEFEF</code></td>
+	</tr>
+</tbody></table>
+
+		<h5>线性条纹<a id="linear_stripes" name="linear_stripes"></a></h5>
+			<p>设定参数格式：</p>
+			<p><code>chf=&lt;bg or c&gt;,ls,&lt;angle&gt;,&lt;color 1&gt;,&lt;width 1&gt;,&lt;color n&gt;,&lt;width n&gt;</code></p>
+			<p>其中
+				<ul>
+					<li><code>&lt;bg 或 c&gt;</code>中<code>bg</code>表示背景，<code>c</code>表示图表区域。</li>
+					<li><code>ls</code>代表线性条纹。</li>
+					<li><code>&lt;angle&gt;</code>设定填充旋转角度，值在<code>0</code>垂直与<code>90</code>水平之间。</li>
+					<li><code>&lt;颜色&gt;</code>为十六进制颜色<code>RRGGBB</code>参数。</li>
+					<li><code>&lt;width&gt;</code>必须在<code>0</code>和<code>1</code>之间，<code>1</code>表示完整宽度。重复填充条纹直至达到完整宽度。</li>
+				</ul>
+			</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td rowspan="2"><code>chf</code></td>
+		<td>图表区域填充垂直线性条纹，<code>0</code>度旋转。<br/><br/>
+		灰色（<code>CCCCCC</code>）为第一个颜色参数，占 20% 宽度。<br/><br/>
+		白色（<code>FFFFFF</code>）为第二个颜色参数，占 20% 宽度。<br/><br/>
+		交替显示条纹直至填充满图表。<br/><br/>
+		图表背景未设置。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:UVVUVVUUUVVUSSVVVXXYadfhjlllllllmmliigdbbZZXVVUUUTU&amp;chco=0000FF&amp;chls=2.0,1.0,0.0&amp;chxt=x,y&amp;chxl=0:|Jan|Feb|Mar|Jun|Jul|Aug|1:|0|25|50|75|100&amp;chs=200x125&amp;chg=100.0,25.0&amp;chf=c,ls,0,CCCCCC,0.2,ffffff,0.2" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chf=c,ls,0,CCCCCC,0.2,</code><br/>
+		<code>FFFFFF,0.2</code></td>
+	</tr>
+	<tr>
+		<td>图表区域填充水平线性条纹，<code>90</code>度旋转。<br/><br/>
+		深灰色（<code>999999</code>）为第一个颜色参数，占 25% 高度。<br/><br/>
+		浅灰色（<code>CCCCCC</code>）、白色（<code>FFFFFF</code>）为第二个、第三个颜色参数，占 25% 高度。<br/><br/>
+		交替显示条纹直至填充满图表。<br/><br/>
+		图表背景未设置。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:UVVUVVUUUVVUSSVVVXXYadfhjlllllllmmliigdbbZZXVVUUUTU&amp;chco=0000FF&amp;chls=2.0,1.0,0.0&amp;chs=200x125&amp;chxt=x,y&amp;chxl=0:|Jan|Feb|Mar|Jun|Jul|Aug|1:|0|25|50|75|100&amp;chg=100.0,25.0&amp;chf=c,ls,90,999999,0.25,CCCCCC,0.25,FFFFFF,0.25" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chf=</code><br/>
+		<code>c,ls,90,</code><br/>
+		<code>999999,0.25,</code><br/>
+		<code>CCCCCC,0.25,</code><br/>
+		<code>FFFFFF,0.25</code><br/></td>
+	</tr>
+</tbody></table>
+	</div>
+</div>
+
+<div class="section">
+	<h4>标注<a id="label_options" name="label_options"></a></h4>
+	<div class="scrap">
+		<p>可用标注类型：
+			<ul>
+				<li><a href="#chtt" scrollto="chtt">图表标题</a></li>
+				<li><a href="#chdl" scrollto="chdl">图表图例</a></li>
+				<li><a href="#pie_labels" scrollto="pie_labels">饼图标注</a></li>
+				<li><a href="#multiple_axes_labels" scrollto="multiple_axes_labels">多轴标注</a></li>
+			</ul>
+		</p>
+		<h5>图表标题<a id="chtt" name="chtt"></a></h5>
+			<p>标题参数：</p>
+			<p><code>chtt=&lt;图表标题&gt;</code></p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td rowspan="2"><code>chtt</code></td>
+		<td>使用加号<code>+</code>代表空格。<br/><br/>
+		竖线<code>|</code>表示换行。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=bvs&amp;chd=s:YUVmw1&amp;chco=FF0000&amp;chs=180x150&amp;chtt=Site+visitors+by+month|January+to+July&amp;chbh=22,4" width="180" height="150" alt="示例图表" /><br/><br/>
+		<code>chtt=Site+visitors+by+month|</code><br/>
+		<code>January+to+July</code></td>
+	</tr>
+	<tr>
+		<td>设定标题字号和颜色（可选）。<br/><br/>
+		<code>chts=&lt;颜色&gt;,&lt;字号&gt;</code><br/><br/>
+		如果图表尺寸<code>chs</code>设定过小，图表将只显示一部分。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=bvs&amp;chd=s:YUVmw1&amp;chco=0000FF&amp;chs=180x150&amp;chtt=Site+visitors&amp;chts=0000FF,20&amp;chbh=22,4" width="180" height="150" alt="示例图表" /><br/><br/>
+		<code>chtt=Site+visitors</code><br/>
+		<code>chts=0000FF,20</code></td>
+	</tr>
+</tbody></table>
+		<h5>图表图例<a id="chdl" name="chdl"></a></h5>
+			<p>图例参数：</p>
+			<p><code>chdl=&lt;第一组数据图例&gt;|&lt;第 n 组数据图例&gt;</code></p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td rowspan="2"><code>chdl</code></td>
+		<td rowspan="2">图例<code>chdl</code>与<a href="#chart_colors" scrollto="chart_colors">颜色</a>属性<code>chco</code>联合使用。<br/><br/>
+		示例中第一组数据使用红色，第二组使用绿色，第三组使用蓝色。</td>
+		<td><img src="http://chart.apis.google.com/chart?&amp;cht=lc&amp;chd=t:0,30,60,70,90,95,100|20,30,40,50,60,70,80|10,30,40,45,52&amp;chco=ff0000,00ff00,0000ff&amp;chs=250x150&amp;chdl=First|Second|Third" width="250" height="150" alt="示例图表" /><br/><br/>
+		<code>chdl=First|Second|Third</code><br/>
+		<code>chco=FF0000,00FF00,0000FF</code></td>
+	</tr>
+	<tr>
+		<td><img src="http://chart.apis.google.com/chart?cht=v&amp;chs=200x100&amp;chd=t:100,20,20,20,20,0,0&amp;chdl=First|Second|Third&amp;chco=ff0000,00ff00,0000ff" width="200" height="100" alt="示例图表" /><br/><br/>
+		<code>chdl=First|Second|Third</code><br/>
+		<code>chco=FF0000,00FF00,0000FF</code></td>
+	</tr>
+</tbody></table>
+		<h5>饼图标注<a id="pie_labels" name="pie_labels"></a></h5>
+			<p>饼图标注参数：</p>
+			<p><code>chl=&lt;标注一&gt;|</code><br/>
+			<code>...</code><br/>
+			<code>&lt;标注 n&gt;</code>
+			</p>
+			<p>双竖线<code>||</code>表示空值。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td><code>chdl</code></td>
+		<td>三维饼图示例。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=p3&amp;chs=220x100&amp;chd=s:Hellob&amp;chl=May|Jun|Jul|Aug|Sep|Oct" width="220" height="100" alt="示例图表" /><br/><br/>
+		<code>chl=May|Jun|Jul|Aug|Sep|Oct</code></td>
+	</tr>
+</tbody></table>
+		<h5>多轴标注<a id="multiple_axes_labels" name="multiple_axes_labels"></a></h5>
+			<p>多轴标注可用于折线图、饼图和散点图：
+			<ul>
+				<li><a href="#axis_type" scrollto="axis_type">坐标轴类型</a></li>
+				<li><a href="#axis_labels" scrollto="axis_labels">坐标值</a></li>
+				<li><a href="#axes_label_positions" scrollto="axes_label_positions">坐标值位置</a></li>
+				<li><a href="#axis_range" scrollto="axis_range">坐标值范围</a></li>
+				<li><a href="#axes_styles" scrollto="axes_styles">标注样式</a></li>
+			</ul>
+			</p>
+
+			<h6>坐标轴类型<a id="axis_type" name="axis_type"></a></h6>
+			<p>可设置多个坐标轴：</p>
+			<p><code>chxt=</code><br/>
+			<code>&lt;坐标轴 1&gt;</code><br/>
+			<code>...</code><br/>
+			<code>&lt;坐标轴 n&gt;</code>
+			</p>
+			<p>可用坐标轴类型：
+			<ul>
+				<li><code>x</code>= 底部 x 坐标轴</li>
+				<li><code>t</code>= 顶部 x 坐标轴</li>
+				<li><code>y</code>= 左侧 y 坐标轴</li>
+				<li><code>r</code>= 右侧 y 坐标轴</li>
+			</ul>
+			</p>
+			<p><code>chxt</code>参数中的坐标轴将拥有一个索引值，第一个坐标轴索引值为 0，第二个为 1，以此类推。所以您可以多次使用<code>x</code>、<code>t</code>、<code>y</code>和<code>r</code>。</p>
+			<p>创建坐标轴时仅<code>chxt</code>参数是必须的，其它参数若未设定将使用默认值。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td><code>chxt</code></td>
+		<td>图例中使用了两个底部 x 轴（两个<code>x</code>）一个左侧 y 轴<code>y</code>、一个右侧 y 轴<code>r</code>和一个顶部 x 轴<code>t</code>。
+		<p class="note">注意：因为没有设置坐标值，所以 Chart API 默认使用 0 到 100。</p></td>
+		<td><img src="http://chart.apis.google.com/chart?chxt=x,y,r,x,t&amp;cht=lc&amp;chd=s:cEAELFJHHHKUju9uuXUc&amp;chco=76A4FB&amp;chls=2.0&amp;chs=200x125" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chxt=x,y,r,x,t</code></td>
+	</tr>
+</tbody></table>
+
+			<h6>坐标值<a id="axis_labels " name="axis_labels"></a></h6>
+			<p>设置坐标值：</p>
+			<p><code>chxl=</code><br/>
+			<code>&lt;坐标轴索引值&gt;:|&lt;坐标值 1&gt;|&lt;坐标值 n&gt;|</code><br/>
+			<code>...</code><br/>
+			<code>&lt;坐标轴索引值&gt;:|&lt;坐标值 1&gt;|&lt;坐标值 n&gt;</code>
+			</p>
+			<p><code>坐标轴索引值</code>指定后续坐标值应用于哪个坐标轴。所有坐标值由竖线<code>|</code>分割。</p>
+			<p class="note">注意：坐标轴索引值必须正序排列。</p>
+			<p>第一个坐标值将作为坐标轴起点，最后一个坐标值作为终点，中间坐标值平均分布在坐标轴上。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td rowspan="2"><code>chxt</code>和<code>chxl</code></td>
+		<td>图例中使用了左右 y 轴（<code>y</code>和<code>r</code>）和两个底部 x 轴（<code>x</code>）。
+		<p class="note">注意：最后一个坐标值后无需分隔符<code>|</code>。</p></td>
+		<td><img src="http://chart.apis.google.com/chart?chxt=x,y,r,x&amp;chxl=0:|Jan|July|Jan|July|Jan|1:|0|100|2:|A|B|C|3:|2005|2006|2007&amp;cht=lc&amp;chd=s:cEAELFJHHHKUju9uuXUc&amp;chco=76A4FB&amp;chls=2.0&amp;chs=200x125" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chxt=x,y,r,x</code><br/>
+		<code>chxl=</code><br/>
+		<code>0:|Jan|July|Jan|July|Jan|</code><br/>
+		<code>1:|0|100|</code><br/>
+		<code>2:|A|B|C|</code><br/>
+		<code>3:|2005|2006|2007</code></td>
+	</tr>
+	<tr>
+		<td>与上例类似，但未设置 y 轴（<code>y</code>）。（未设置<code>1:</code>值）。
+		<p class="note">注意：最后一个坐标值后无需分隔符<code>|</code>。</p></td>
+		<td><img src="http://chart.apis.google.com/chart?chxt=x,y,r,x&amp;chxl=0:|Jan|July|Jan|July|Jan|2:|A|B|C|3:|2005|2006|2007&amp;cht=lc&amp;chd=s:cEAELFJHHHKUju9uuXUc&amp;chco=76A4FB&amp;chls=2.0&amp;chs=200x125" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chxt=x,y,r,x</code><br/>
+		<code>chxl=</code><br/>
+		<code>0:|Jan|July|Jan|July|Jan|</code><br/>
+		（y 轴未设置）<br/>
+		<code>2:|A|B|C|</code><br/>
+		<code>3:|2005|2006|2007</code></td>
+	</tr>
+</tbody></table>
+
+			<h6>坐标值位置<a id="axes_label_positions" name="axes_label_positions"></a></h6>
+			<p>可设置多个坐标轴：</p>
+			<p><code>chxp=</code><br/>
+			<code>&lt;坐标轴索引值&gt;,&lt;坐标值 1 位置&gt;,&lt;坐标值 n 位置&gt;|</code><br/>
+			<code>...</code><br/>
+			<code>&lt;坐标轴索引值&gt;,&lt;坐标值 1 位置&gt;,&lt;坐标值 n 位置&gt;</code>
+			</p>
+			<p>多组数据间使用竖线分隔符<code>|</code>。若未设置<code>chxt</code>值，则坐标值使用位置值标注。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td><code>chxp</code></td>
+		<td>图例中使用了底部 x 轴，一个左侧 y 轴<code>y</code>和一个右侧 y 轴<code>r</code>。<br/><br/>
+		x 轴（索引<code>0</code>）未设置坐标值与坐标值位置，所以 API 默认平均分布 0 到 100。<br/><br/>
+		y 轴（<code>y</code>）设置坐标值（min，average 和 max）与坐标值位置（<code>10,35,75</code>）。<br/><br/>
+		右侧 y 轴（<code>r</code>）仅设置坐标值位置（<code>0,1,2,4</code>），所以 API 将其同时用于坐标值。</td>
+		<td><img src="http://chart.apis.google.com/chart?chxt=x,y,r&amp;chxr=2,0,4&amp;chxl=1:|min|average|max&amp;chxp=1,10,35,75|2,0,1,2,4&amp;cht=lc&amp;chd=s:cEAELFJHHHKUju9uuXUc&amp;chco=76A4FB&amp;chls=2.0&amp;chs=200x125" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chxt=x,y,r</code><br/>
+		<code>chxl=1:|min|average|max</code><br/>
+		<code>chxp=1,10,35,75|2,0,1,2,4</code></td>
+	</tr>
+</tbody></table>
+
+			<h6>坐标值范围<a id="axis_range" name="axis_range"></a></h6>
+			<p>设置坐标值范围：</p>
+			<p><code>chxr=</code><br/>
+			<code>&lt;坐标轴索引值&gt;,&lt;坐标值起始值&gt;,&lt;坐标值终止值&gt;|</code><br/>
+			<code>...</code><br/>
+			<code>&lt;坐标轴索引值&gt;,&lt;坐标值起始值&gt;,&lt;坐标值终止值&gt;</code>
+			</p>
+			<p>多组数据间使用竖线分隔符<code>|</code>。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td rowspan="2"><code>chxr</code></td>
+		<td>图例中使用了左右 y 轴（<code>y</code>和<code>r</code>）和底部 x 轴（<code>x</code>）。<br/><br/>
+		每个坐标轴均未设置坐标值和分布位置，所以坐标值和分布位置采用坐标值范围设置。
+		<p class="note">注意：右侧 y 轴坐标值降序排列，因为初始值<code>1000</code>大于终止值<code>0</code>。</p></td>
+		<td><img src="http://chart.apis.google.com/chart?chxt=x,y,r&amp;chxr=0,100,500|1,0,200|2,1000,0&amp;cht=lc&amp;chd=s:cEAELFJHHHKUju9uuXUc&amp;chco=76A4FB&amp;chls=2.0&amp;chs=200x125" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chxt=x,y,r</code><br/>
+		<code>chxr=0,100,500|1,0,200|2,1000,0</code></td>
+	</tr>
+	<tr>
+		<td>只使用了 x 轴（<code>x</code>），坐标值、坐标值位置和坐标值范围均设置。</td>
+		<td><img src="http://chart.apis.google.com/chart?chxt=x&amp;chxl=0:|200|300|400&amp;chxp=0,200,300,400&amp;chxr=0,100,500&amp;cht=lc&amp;chd=s:cEAELFJHUc&amp;chco=76A4FB&amp;chls=2.0&amp;chs=200x125" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chxt=x</code><br/>
+		<code>chxr=0,100,500</code><br/>
+		<code>chxl=0:|200|300|400</code><br/>
+		<code>chxp=0,200,300,400</code></td>
+	</tr>
+</tbody></table>
+
+			<h6>标注样式<a id="axes_styles" name="axes_styles"></a></h6>
+			<p>设置坐标值标注样式：</p>
+			<p><code>chxs=</code><br/>
+			<code>&lt;坐标轴索引值&gt;,&lt;颜色&gt;,&lt;字号&gt;,&lt;对齐方式&gt;|</code><br/>
+			<code>...</code><br/>
+			<code>&lt;坐标轴索引值&gt;,&lt;颜色&gt;,&lt;字号&gt;,&lt;对齐方式&gt;</code>
+			</p>
+			<p>其中：
+			<ul>
+				<li><code>坐标轴索引值</code>为<code>chxt</code>参数中坐标索引。</li>
+				<li><code>&lt;颜色&gt;</code>为<a href="#rgb" scrollto="rgb">十六进制颜色值</a>。</li>
+				<li><code>&lt;字号&gt;</code>设置字体大小（像素），可选。</li>
+				<li><code>&lt;对齐方式&gt;</code>设置坐标值对齐方式，可选。x 轴默认居中对齐，y 轴默认右对齐，右侧 y 轴默认左对齐。设置<code>0</code>为居中，<code>-1</code>为左对齐，<code>1</code>为右对齐。</li>
+			</ul>
+			</p>
+			<p>多组数据间使用竖线分隔符<code>|</code>。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td rowspan="2"><code>chxs</code></td>
+		<td>为第二个 x 轴设置字号、颜色、对齐方式。</td>
+		<td><img src="http://chart.apis.google.com/chart?chxt=x,y,r,x&amp;chxr=2,0,4&amp;chxl=3:|Jan|Feb|Mar|1:|min|average|max&amp;chxp=1,10,35,75&amp;cht=lc&amp;chd=s:cEAELFJHHHKUju9uuXUc&amp;chco=76A4FB&amp;chls=2.0&amp;chs=220x125&amp;chxs=3,0000dd,12" width="220" height="125" alt="示例图表" /><br/><br/>
+		<code>chxt=x,y,r,x</code><br/>
+		<code>chxr=2,0,4</code><br/>
+		<code>chxl=3:|Jan|Feb|Mar|1:|min|average|max</code><br/>
+		<code>chxp=1,10,35,75</code><br/>
+		<code>chxs=3,0000dd,12</code></td>
+	</tr>
+	<tr>
+		<td>两个 x 轴均设置字号、颜色、对齐方式。</td>
+		<td><img src="http://chart.apis.google.com/chart?chxt=x,x&amp;chxl=1:||Feb|Mar||0:|1st|15th|1st|15th|1st&amp;cht=lc&amp;chd=s:cEAELFJHHHKUju9uuXUc&amp;chco=76A4FB&amp;chls=2.0&amp;chs=200x125&amp;chxs=0,0000dd,10|1,0000dd,12,0" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chxt=x,x</code><br/>
+		<code>chxl=1:||Feb|Mar||</code><br/>
+		<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0:|1st|15th|1st|15th|1st</code><br/>
+		<code>chxs=0,0000dd,10|1,0000dd,12,0</code></td>
+	</tr>
+</tbody></table>
+	</div>
+</div>
+
+<div class="section">
+	<h4>样式<a id="styles_markers_fill" name="styles_markers_fill"></a></h4>
+	<div class="scrap">
+		<p>可用样式设置：
+		<ul>
+			<li><a href="#line_styles" scrollto="line_styles">折线样式</a></li>
+			<li><a href="#grid" scrollto="grid">网格线</a></li>
+			<li><a href="#shape_markers" scrollto="shape_markers">形状标记</a></li>
+			<li><a href="#hor_line_marker" scrollto="hor_line_marker">水平区间填充</a></li>
+			<li><a href="#vert_line_marker" scrollto="vert_line_marker">垂直区间填充</a></li>
+			<li><a href="#fill_area_marker" scrollto="fill_area_marker">数据区块填充</a></li>
+		</ul>
+		</p>
+
+		<h5>折线样式<a id="line_styles" name="line_styles"></a></h5>
+			<p>设定参数格式：</p>
+			<p><code>chls=</code><br/>
+			<code>&lt;数据线 1 粗细&gt;,&lt;数据线 1 线段长度&gt;,&lt;数据线 1 线段间隔长度&gt;|</code><br/>
+			<code>...</code><br/>
+			<code>&lt;数据线 n 粗细&gt;,&lt;数据线 n 线段长度&gt;,&lt;数据线 n 线段间隔长度&gt;</code></p>
+			<p>参数为浮点数，使用竖线<code>|</code>作为数据组分隔符。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td><code>chls</code></td>
+		<td>图例中粗虚线设置为<code>3,6,3</code>，细实线设置为<code>1,1,0</code>。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:93zyvneTTOMJMLIJFHEAECFJGHDBFCFIERcgnpy45879,IJKNUWUWYdnswz047977315533zy1246872tnkgcaZQONHCECAAAAEII&amp;chls=3,6,3|1,1,0&amp;chs=200x125" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chls=3,6,3|1,1,0</code></td>
+	</tr>
+</tbody></table>
+
+		<h5>网格线<a id="grid" name="grid"></a></h5>
+			<p>为折线图设定网格线格式：</p>
+			<p><code>chg=</code><br/>
+			<code>&lt;x 轴步长&gt;,</code><br/>
+			<code>&lt;y 轴步长&gt;,</code><br/>
+			<code>&lt;线段长度&gt;,</code><br/>
+			<code>&lt;线段间隔长度&gt;,</code></p>
+			<p>参数为整数或一位小数数值，例如 10.0 或 10.5 。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td rowspan="3"><code>chg</code></td>
+		<td>仅设置步长<code>20,50</code>，Chart API 默认显示虚线。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:cEAELFJHHHKUju9uuXUc&amp;chco=76A4FB&amp;chls=2.0,0.0,0.0&amp;chxt=x,y&amp;chxl=0:|0|1|2|3|4|5|1:|0|50|100&amp;chs=200x125&amp;chg=20,50" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chg=20,50</code></td>
+	</tr>
+	<tr>
+		<td>步长<code>20,50</code>、线段长度<code>1</code>、线段间隔均设置<code>5</code>。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:cEAELFJHHHKUju9uuXUc&amp;chco=76A4FB&amp;chls=2.0,0.0,0.0&amp;chxt=x,y&amp;chxl=0:|0|1|2|3|4|5|1:|0|50|100&amp;chs=200x125&amp;chg=20,50,1,5" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chg=20,50,1,5</code></td>
+	</tr>
+	<tr>
+		<td>使用实线则设置线段间隔为零（<code>0</code>）。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:cEAELFJHHHKUju9uuXUc&amp;chco=76A4FB&amp;chls=2.0,0.0,0.0&amp;chs=200x125&amp;chg=20,50,1,0&amp;chxt=x,y&amp;chxl=0:|0|1|2|3|4|5|1:|0|50|100" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chg=20,50,1,0</code></td>
+	</tr>
+</tbody></table>
+
+		<h5>形状标记和区间填充<a id="shape_markers" name="shape_markers"></a></h5>
+			<p>折线图和散点图有效，使用<code>chm</code>参数：
+			<ul>
+				<li><a href="#shape_markers2" scrollto="shape_markers2">形状标记</a></li>
+				<li><a href="#hor_line_marker" scrollto="hor_line_marker">区间填充</a></li>
+			</ul></p>
+			<h6>形状标记<a id="shape_markers2" name="shape_markers2"></a></h6>
+			<p>为折线图和散点图设置形状标记：</p>
+			<p><code>chm=</code><br/>
+			<code>&lt;形状类型&gt;,&lt;颜色&gt;,&lt;数据组索引&gt;,&lt;数据点&gt;,&lt;尺寸&gt;|</code><br/>
+			<code>...</code><br/>
+			<code>&lt;形状类型&gt;,&lt;颜色&gt;,&lt;数据组索引&gt;,&lt;数据点&gt;,&lt;尺寸&gt;</code></p>
+			<p>其中：<ul>
+				<li><code>&lt;形状类型&gt;</code>为以下字符：<br/>
+					<code>a</code>代表箭头（Arrow）。<br/>
+					<code>c</code>代表十字（Cross）。<br/>
+					<code>d</code>代表菱形（Diamond）。<br/>
+					<code>o</code>代表圆圈。<br/>
+					<code>s</code>代表正方形（Square）。<br/>
+					<code>v</code>代表 x 轴至该点的垂直线。<br/>
+					<code>V</code>代表穿过该点的垂直线。<br/>
+					<code>h</code>代表穿过该点的水平线。<br/>
+					<code>x</code>代表十叉。</li>
+				<li><code>&lt;颜色&gt;</code>为<a href="#rgb" scrollto="rgb">十六进制颜色值</a>。</li>
+				<li><code>&lt;数据组索引&gt;</code>指定形状所在数据组，<code>0</code>为第一组数据，<code>1</code>为第二组数据，以此类推。</li>
+				<li><code>&lt;数据点&gt;</code>为浮点数，指定形状所在数据点，<code>1</code>为第一个数据，<code>2</code>为第二个数据，以此类推。小数代表数据点间位置。</li>
+				<li><code>&lt;尺寸&gt;</code>设定形状像素大小。</li>
+			</ul></p>
+			<p>多组数据使用竖线<code>|</code>作为分隔符。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td rowspan="3"><code>chm</code></td>
+		<td>示例中使用了全部形状标记。<br/><br/>
+		最后一个参数<code>h</code>为穿过第七个数据点的水平线。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:9gounjqGJD&amp;chco=008000&amp;chls=2.0,4.0,1.0&amp;chs=200x125&amp;chxt=x&amp;chxl=0:||c|d|a|o|s|v|V|x|&amp;chm=a,990066,0,3.0,9.0|c,FF0000,0,1.0,20.0|d,80C65A,0,2.0,20.0|o,FF9900,0,4.0,20.0|s,3399CC,0,5.0,10.0|v,BBCCED,0,6.0,1.0|V,3399CC,0,7.0,1.0|x,FFCC33,0,8.0,20.0|h,000000,0,0.30,0.5" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chm=</code><br/>
+		<code>c,FF0000,0,1.0,20.0|</code><br/>
+		<code>d,80C65A,0,2.0,20.0|</code><br/>
+		<code>a,990066,0,3.0,9.0|</code><br/>
+		<code>o,FF9900,0,4.0,20.0|</code><br/>
+		<code>s,3399CC,0,5.0,10.0|</code><br/>
+		<code>v,BBCCED,0,6.0,1.0|</code><br/>
+		<code>V,3399CC,0,7.0,1.0|</code><br/>
+		<code>x,FFCC33,0,8.0,20.0|</code><br/>
+		<code>h,3399CC,0,7.0,1.0</code></td>
+	</tr>
+	<tr>
+		<td>散点图示例，使用正方形<code>s</code>。<br/><br/>
+		数据点设置参看<a href="#scatter_plot" scrollto="scatter_plot">散点图</a>。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=s&amp;chd=s:984sttvuvkQIBLKNCAIipr3z9,DEJPgq0uov17_zwopQOD&amp;chs=200x125&amp;chxt=x,y&amp;chxl=0:||1|2|3|4|5|1:||50|100&amp;chg=20.0,25.0&amp;chm=s,FF0000,1,1.0,10.0" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chm=</code><br/>
+		<code>s,FF0000,1,1.0,10.0</code></td>
+	</tr>
+	<tr>
+		<td>示例中为两组数据分别使用圆圈与菱形标记。<br/><br/>
+		如果两组数据中指定了相同的数据点，则以第一组数据点形状为准。示例中圆圈覆盖菱形设置。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:Hello,1olrd&amp;chs=200x125&amp;chm=o,ff9900,0,1.0,10.0|o,ff9900,0,2.0,10.0|o,ff9900,0,3.0,10.0|d,ff9900,1,1.0,10.0|d,ff9900,1,2.0,10.0|d,ff9900,1,3.0,10.0" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chm=</code><br/>
+		<code>o,ff9900,0,1.0,10.0|</code><br/>
+		<code>o,ff9900,0,2.0,10.0|</code><br/>
+		<code>o,ff9900,0,3.0,10.0|</code><br/>
+		<code>d,ff9900,1,1.0,10.0|</code><br/>
+		<code>d,ff9900,1,2.0,10.0|</code><br/>
+		<code>d,ff9900,1,3.0,10.0</code></td>
+	</tr>
+</tbody></table>
+
+			<h6>区间填充<a id="hor_line_marker" name="hor_line_marker"></a><a id="vert_line_marker" name="vert_line_marker"></a></h6>
+			<p>折线图和散点图有效，使用<code>chm</code>参数：</p>
+			<p><code>chm=</code><br/>
+			<code>&lt;r 或 R&gt;,&lt;颜色&gt;,&lt;<i>任意值</i>&gt;,&lt;开始值&gt;,&lt;终止值&gt;|</code><br/>
+			<code>...</code><br/>
+			<code>&lt;r 或 R&gt;,&lt;颜色&gt;,&lt;<i>任意值</i>&gt;,&lt;开始值&gt;,&lt;终止值&gt;</code></p>
+			<p>其中：<ul>
+				<li><code>&lt;r 或 R&gt;</code>中<code>r</code>代表水平填充，<code>R</code>代表垂直填充。</li>
+				<li><code>&lt;颜色&gt;</code>为<a href="#rgb" scrollto="rgb">十六进制颜色值</a>。</li>
+				<li><code>&lt;<i>任意值</i>&gt;</code>未使用，请忽略该值。</li>
+				<li><code>&lt;开始值&gt;</code>：
+				<ul>
+					<li>水平填充中，垂直方向最低端为<code>0.00</code>，最顶端为<code>1.00</code>。</li>
+					<li>垂直填充中，水平方向最左侧为<code>0.00</code>，最右侧为<code>1.00</code>。</li>
+				</ul></li>
+				<li><code>&lt;终止值&gt;</code>：
+				<ul>
+					<li>水平填充中，垂直方向最低端为<code>0.00</code>，最顶端为<code>1.00</code>。</li>
+					<li>垂直填充中，水平方向最左侧为<code>0.00</code>，最右侧为<code>1.00</code>。</li>
+				</ul></li>
+			</ul></p>
+			<p>多组数据使用竖线<code>|</code>作为分隔符。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td><code>chm=r</code></td>
+		<td>区域填充可以为颜色带或模拟直线，示例中浅蓝色（<code>E5ECF9</code>）颜色带和黑色（<code>000000</code>）直线。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:9gounjqGJD&amp;chco=008000&amp;chls=2.0,4.0,1.0&amp;chxt=x,y&amp;chxl=0:|Sep|Oct|Nov|Dec|1:||50|100&amp;chs=200x125&amp;chm=r,E5ECF9,0,0.75,0.25|r,000000,0,0.1,0.11" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chm=</code><br/>
+		<code>r,E5ECF9,0,0.75,0.25|</code><br/>
+		<code>r,000000,0,0.1,0.11</code></td>
+	</tr>
+	<tr>
+		<td><code>chm</code></td>
+		<td>垂直示例，红色（<code>FF0000</code>）直线和蓝色（<code>A0BAE9</code>）颜色带。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:9gounjqGJD&amp;chco=008000&amp;chls=2.0,4.0,1.0&amp;chxt=x,y&amp;chxl=0:|Sep|Oct|Nov|Dec|1:||50|100&amp;chs=200x125&amp;chm=R,A0BAE9,0,0.75,0.25|R,ff0000,0,0.1,0.11" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chm=</code><br/>
+		<code>R,FF0000,0,0.1,0.11|</code><br/>
+		<code>R,A0BAE9,0,0.75,0.25</code></td>
+	</tr>
+	<tr>
+		<td><code>chm=</code><br/>
+		<code>R...|r...</code></td>
+		<td>可同时设置水平与垂直填充，后设置的填充将覆盖前边已设置的相同填充区域。示例中先设置的垂直填充，所以水平填充覆盖垂直填充。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:9gounjqGJD&amp;chco=008000&amp;chls=2.0,4.0,1.0&amp;chxt=x,y&amp;chxl=0:|Sep|Oct|Nov|Dec|1:||50|100&amp;chs=200x125&amp;chm=R,ff0000,0,0.1,0.11|R,A0BAE9,0,0.75,0.25|r,E5ECF9,0,0.75,0.25|r,000000,0,0.1,0.11" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chm=</code><br/>
+		<code>R,ff0000,0,0.1,0.11|</code><br/>
+		<code>R,A0BAE9,0,0.75,0.25|</code><br/>
+		<code>r,E5ECF9,0,0.75,0.25|</code><br/>
+		<code>r,000000,0,0.1,0.11</code></td>
+	</tr>
+</tbody></table>
+
+		<h5>数据区块填充<a id="fill_area_marker" name="fill_area_marker"></a></h5>
+			<p>设定数据区块填充：</p>
+			<p><code>chm=</code><br/>
+			<code>b,&lt;颜色&gt;,&lt;开始折线索引值&gt;,&lt;终止折线索引值&gt;,&lt;<i>任意值</i>&gt;|</code><br/>
+			<code>...</code><br/>
+			<code>b,&lt;颜色&gt;,&lt;开始折线索引值&gt;,&lt;终止折线索引值&gt;,&lt;<i>任意值</i>&gt;</code></p>
+			<p>其中：<ul>
+				<li><code>&lt;颜色&gt;</code>为<a href="#rgb" scrollto="rgb">十六进制颜色值</a>。</li>
+				<li><code>&lt;开始折线索引值&gt;</code>设定颜色填充起始折线。为<code>chd</code>参数中数据组索引值，<code>0</code>为第一组数据，<code>1</code>为第二组数据，以此类推。</li>
+				<li><code>&lt;终止折线索引值&gt;</code>设置颜色填充终止折线。为<code>chd</code>参数中数据组索引值，<code>0</code>为第一组数据，<code>1</code>为第二组数据，以此类推。</li>
+				<li><code>&lt;<i>任意值</i>&gt;</code>未使用，请忽略该值。</li>
+			</ul></p>
+			<p>多组数据使用竖线<code>|</code>作为分隔符。</p>
+<table><thead>
+	<tr>
+		<th>参数</th>
+		<th>说明</th>
+		<th>示例</th>
+	</tr>
+</thead><tbody>
+	<tr>
+		<td rowspan="2"><code>chm=b</code></td>
+		<td>首先指定数据最大值。<br/><br/>
+		填充图表顶部至第一组数据，需指定数据最大值（<code>9</code>、<code>100.0</code>等，根据所使用<a href="#chart_data" scrollto="chart_data">数据类型</a>）。<br/><br/>
+		填充最后一组数据至图表底部，需指定数据最小值（<code>A</code>、<code>0</code>、<code>AA</code>等，根据所使用<a href="#chart_data" scrollto="chart_data">数据类型</a>）。<br/><br/>
+		数据线颜色根据参数<code>chco</code>绘制，参考<a href="#chart_colors" scrollto="chart_colors">颜色</a>。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:99,cefhjkqwrlgYcfgc,QSSVXXdkfZUMRTUQ,HJJMOOUbVPKDHKLH,AA&amp;chco=000000,000000,000000,000000,000000&amp;chls=1,1,0|1,1,0|1,1,0|1,4,0&amp;chs=200x125&amp;chxt=x,y&amp;chxl=0:|Sep|Oct|Nov|Dec|1:||50|100&amp;chg=25,25&amp;chm=b,76A4FB,0,1,0|b,224499,1,2,0|b,FF0000,2,3,0|b,80C65A,3,4,0" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chd=s:</code><br/>
+		<code>99,</code><br/>
+		<code>cefhjkqwrlgYcfgc,</code><br/>
+		<code>QSSVXXdkfZUMRTUQ,</code><br/>
+		<code>HJJMOOUbVPKDHKLH,</code><br/>
+		<code>AA</code><br/>
+		<br/>
+		<code>chm=</code><br/>
+		<code>b,76A4FB,0,1,0|</code>（浅蓝）<br/>
+		<code>b,224499,1,2,0|</code>（蓝）<br/>
+		<code>b,FF0000,2,3,0|</code>（红）<br/>
+		<code>b,80C65A,3,4,0</code>（绿）<br/>
+		<br/>
+		<code>chco=000000,000000,000000,</code><br/>
+		<code>000000,000000</code></td>
+	</tr>
+	<tr>
+		<td>删除了上例中第一组和最后一组数据（<code>99</code>和<code>AA</code>）。<br/><br/>
+		未设置<code>chco</code>参数，所以折线颜色根据数据线类型默认值绘制，数据线类型为<code>cht=lc</code>，所以绘制为黄色。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chd=s:cefhjkqwrlgYcfgc,QSSVXXdkfZUMRTUQ,HJJMOOUbVPKDHKLH&amp;chls=1,1,0|1,1,0|1,1,0|1,4,0&amp;chxt=x,y&amp;chxl=0:|Sep|Oct|Nov|Dec|1:||50|100&amp;chs=200x125&amp;chm=b,224499,0,1,0|b,FF0000,1,2,0|b,80C65A,2,3,0" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chd=s:</code><br/>
+		<code>cefhjkqwrlgYcfgc,</code><br/>
+		<code>QSSVXXdkfZUMRTUQ,</code><br/>
+		<code>HJJMOOUbVPKDHKLH,</code><br/>
+		<br/>
+		<code>chm=</code><br/>
+		<code>b,224499,0,1,0|</code>（蓝）<br/>
+		<code>b,FF0000,1,2,0|</code>（红）<br/>
+		<code>b,80C65A,2,3,0</code>（绿，不存在第四组数据，所以未绘制）</td>
+	</tr>
+	<tr>
+		<td><code>chm=B</code></td>
+		<td>仅有一组数据时，使用<code>chm=B</code>可填充数据线以下全部区域。</td>
+		<td><img src="http://chart.apis.google.com/chart?cht=lc&amp;chs=200x125&amp;chd=s:ATSTaVd21981uocA&amp;chco=224499&amp;chxt=x,y&amp;chxl=0:|Sep|Oct|Nov|Dec|1:||50|100&amp;chm=B,76A4FB,0,0,0" width="200" height="125" alt="示例图表" /><br/><br/>
+		<code>chm=B,76A4FB,0,0,0</code><br/>
+		<code>chd=s:ATSTaVd21981uocA</code></td>
+	</tr>
+</tbody></table>
+	</div>
+</div>
+
+</div>
+</body>
+</html>
